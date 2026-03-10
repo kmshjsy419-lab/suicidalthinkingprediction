@@ -2,17 +2,21 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# 모델 불러오기
-model = joblib.load("model_gbm.pkl")
-
 st.title("Suicidal Thinking Probability Prediction")
 st.write("Enter the following information:")
 
+# 모델 불러오기
+try:
+    model = joblib.load("model_gbm.pkl")
+    st.success("Model loaded successfully.")
+except Exception as e:
+    st.error(f"Failed to load model: {e}")
+    st.stop()
+
 # numeric
-Age = st.number_input("Age", 19, 100, 30)
+Age = st.number_input("Age", min_value=19, max_value=100, value=30, step=1)
 
-# ===== categorical input (label -> code) =====
-
+# categorical
 sex_label = st.selectbox("Sex", ["Male", "Female"])
 sex_map = {
     "Male": 1,
@@ -44,8 +48,8 @@ education_label = st.selectbox(
     ["High school or below", "College or above"]
 )
 education_map = {
-    "High school or below": 1,
-    "College or above": 2
+    "High school or below": 1.0,
+    "College or above": 2.0
 }
 Education = education_map[education_label]
 
@@ -54,20 +58,20 @@ income_label = st.selectbox(
     ["Quartile 1 (lowest)", "Quartile 2", "Quartile 3", "Quartile 4 (highest)"]
 )
 income_map = {
-    "Quartile 1 (lowest)": 1,
-    "Quartile 2": 2,
-    "Quartile 3": 3,
-    "Quartile 4 (highest)": 4
+    "Quartile 1 (lowest)": 1.0,
+    "Quartile 2": 2.0,
+    "Quartile 3": 3.0,
+    "Quartile 4 (highest)": 4.0
 }
 Household_income = income_map[income_label]
 
 smoking_label = st.selectbox(
     "Smoking status",
-    ["Smoker", "Non-smoker"]
+    ["Non-smoker", "Smoker"]
 )
 smoking_map = {
-    "Smoker": 1,
-    "Non-smoker": 2
+    "Non-smoker": 0.0,
+    "Smoker": 1.0
 }
 Smoking_status = smoking_map[smoking_label]
 
@@ -76,72 +80,79 @@ drink_label = st.selectbox(
     ["<2", "2-4", "≥5"]
 )
 drink_map = {
-    "<2": 1,
-    "2-4": 2,
-    "≥5": 3
+    "<2": 1.0,
+    "2-4": 2.0,
+    "≥5": 3.0
 }
 Drink_frequency = drink_map[drink_label]
 
 stress_label = st.selectbox(
     "Stress status",
-    ["Severe", "High", "Moderate", "Low"]
+    ["Low", "Moderate", "High", "Severe"]
 )
 stress_map = {
-    "Severe": 1,
-    "High": 2,
-    "Moderate": 3,
-    "Low": 4
+    "Low": 1.0,
+    "Moderate": 2.0,
+    "High": 3.0,
+    "Severe": 4.0
 }
 Stress_status = stress_map[stress_label]
 
 depressive_label = st.selectbox(
     "Depressive symptoms",
-    ["Yes","No"]
+    ["No", "Yes"]
 )
 depressive_map = {
-    "Yes": 1,
-    "No": 0
+    "No": 0.0,
+    "Yes": 1.0
 }
 Depressive_symptoms = depressive_map[depressive_label]
 
 living_alone_label = st.selectbox(
     "Living alone",
-    ["Yes","No"]
+    ["No", "Yes"]
 )
 living_alone_map = {
-    "Yes": 1,
-    "No": 2
+    "No": 2.0,
+    "Yes": 1.0
 }
 Living_alone = living_alone_map[living_alone_label]
 
 employment_label = st.selectbox(
     "Employment status",
-    ["Employed", "Unemployed"]
+    ["Unemployed", "Employed"]
 )
 employment_map = {
-    "Employed": 1,
-    "Unemployed": 2
+    "Unemployed": 0.0,
+    "Employed": 1.0
 }
 Employment_status = employment_map[employment_label]
 
-# 데이터프레임 생성
+# 학습 데이터 순서와 동일하게 생성
 input_df = pd.DataFrame([{
-    'Sex': Sex,
-    'Region': Region,
-    'BMI': BMI,
-    'Education': Education,
-    'Household_income': Household_income,
-    'Smoking_status': Smoking_status,
-    'Drink_frequency': Drink_frequency,
-    'Stress_status': Stress_status,
-    'Depressive_symptoms': Depressive_symptoms,
-    'Living_alone': Living_alone,
-    'Employment_status': Employment_status,
-    'Age': Age
+    "Age": Age,
+    "Sex": Sex,
+    "Region": Region,
+    "BMI": BMI,
+    "Education": Education,
+    "Household_income": Household_income,
+    "Smoking_status": Smoking_status,
+    "Drink_frequency": Drink_frequency,
+    "Stress_status": Stress_status,
+    "Depressive_symptoms": Depressive_symptoms,
+    "Living_alone": Living_alone,
+    "Employment_status": Employment_status
 }])
 
 if st.button("Predict probability"):
-    prob = model.predict_proba(input_df)[0][1]
+    try:
+        st.write("Input values sent to the model:")
+        st.dataframe(input_df)
 
-    st.subheader("Predicted probability of suicidal thinking")
-    st.write(f"{prob:.2%}")
+        prob = model.predict_proba(input_df)[0][1]
+
+        st.subheader("Predicted probability of suicidal thinking")
+        st.write(f"{prob:.2%}")
+
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
