@@ -2,12 +2,17 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# 모델 불러오기
-model = joblib.load("model_gbm.pkl")
-
 st.title("Suicidal Thinking Probability Prediction")
 st.write("Enter the following information:")
 
+# 모델 불러오기
+try:
+    model = joblib.load("model_gbm.pkl")
+    st.success("Model loaded successfully.")
+except Exception as e:
+    st.error(f"Failed to load model: {e}")
+    st.stop()
+    
 # numeric
 Age = st.number_input("Age", 19, 100, 30)
 
@@ -141,7 +146,14 @@ input_df = pd.DataFrame([{
 }])
 
 if st.button("Predict probability"):
-    prob = model.predict_proba(input_df)[0][1]
+    try:
+        prob = model.predict_proba(input_df)[0][1]
 
-    st.subheader("Predicted probability of suicidal thinking")
-    st.write(f"{prob:.2%}")
+        st.subheader("Predicted probability of suicidal thinking")
+        st.write(f"{prob:.2%}")
+
+        st.write("Input values sent to the model:")
+        st.dataframe(input_df)
+
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
