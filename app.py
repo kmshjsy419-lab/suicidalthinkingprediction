@@ -48,8 +48,8 @@ education_label = st.selectbox(
     ["High school or below", "College or above"]
 )
 education_map = {
-    "High school or below": 1.0,
-    "College or above": 2.0
+    "High school or below": 1,
+    "College or above": 2
 }
 Education = education_map[education_label]
 
@@ -58,10 +58,10 @@ income_label = st.selectbox(
     ["Quartile 1 (lowest)", "Quartile 2", "Quartile 3", "Quartile 4 (highest)"]
 )
 income_map = {
-    "Quartile 1 (lowest)": 1.0,
-    "Quartile 2": 2.0,
-    "Quartile 3": 3.0,
-    "Quartile 4 (highest)": 4.0
+    "Quartile 1 (lowest)": 1,
+    "Quartile 2": 2,
+    "Quartile 3": 3,
+    "Quartile 4 (highest)": 4
 }
 Household_income = income_map[income_label]
 
@@ -70,8 +70,8 @@ smoking_label = st.selectbox(
     ["Non-smoker", "Smoker"]
 )
 smoking_map = {
-    "Non-smoker": 0.0,
-    "Smoker": 1.0
+    "Non-smoker": 0,
+    "Smoker": 1
 }
 Smoking_status = smoking_map[smoking_label]
 
@@ -80,9 +80,9 @@ drink_label = st.selectbox(
     ["<2", "2-4", "≥5"]
 )
 drink_map = {
-    "<2": 1.0,
-    "2-4": 2.0,
-    "≥5": 3.0
+    "<2": 1,
+    "2-4": 2,
+    "≥5": 3
 }
 Drink_frequency = drink_map[drink_label]
 
@@ -91,10 +91,10 @@ stress_label = st.selectbox(
     ["Low", "Moderate", "High", "Severe"]
 )
 stress_map = {
-    "Low": 1.0,
-    "Moderate": 2.0,
-    "High": 3.0,
-    "Severe": 4.0
+    "Low": 4,
+    "Moderate": 3,
+    "High": 2,
+    "Severe": 1
 }
 Stress_status = stress_map[stress_label]
 
@@ -103,8 +103,8 @@ depressive_label = st.selectbox(
     ["No", "Yes"]
 )
 depressive_map = {
-    "No": 0.0,
-    "Yes": 1.0
+    "No": 0,
+    "Yes": 1
 }
 Depressive_symptoms = depressive_map[depressive_label]
 
@@ -113,8 +113,8 @@ living_alone_label = st.selectbox(
     ["No", "Yes"]
 )
 living_alone_map = {
-    "No": 2.0,
-    "Yes": 1.0
+    "No": 2,
+    "Yes": 1
 }
 Living_alone = living_alone_map[living_alone_label]
 
@@ -123,8 +123,8 @@ employment_label = st.selectbox(
     ["Unemployed", "Employed"]
 )
 employment_map = {
-    "Unemployed": 0.0,
-    "Employed": 1.0
+    "Unemployed": 0,
+    "Employed": 1
 }
 Employment_status = employment_map[employment_label]
 
