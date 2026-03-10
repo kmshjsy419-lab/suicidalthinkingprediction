@@ -7,7 +7,7 @@ st.write("Enter the following information:")
 
 # 모델 불러오기
 try:
-    model = joblib.load("model_gbm.pkl")
+    model = joblib.load("model_gbm_pipeline.pkl")
     st.success("Model loaded successfully.")
 except Exception as e:
     st.error(f"Failed to load model: {e}")
