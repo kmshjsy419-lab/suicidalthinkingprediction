@@ -209,17 +209,16 @@ if st.button("Predict probability", type="primary", use_container_width=True):
         with st.container(border=True):
             st.markdown("#### What this means")
             st.write(
-                "This percentage is a model-based estimate calculated from the information you entered. "
-                "A higher value indicates greater similarity to patterns associated with suicidal ideation in the data used to develop the model. "
-                "It does not confirm whether suicidal ideation is present."
+                "This result estimates the likelihood of suicidal ideation based on the information you provided. "
+                "A higher percentage indicates a higher estimated likelihood. "
+                "This result is not a clinical diagnosis."
             )
 
         with st.container(border=True):
-            st.markdown("#### Important note")
+            st.markdown("#### Keep in mind")
             st.write(
-                "The model can produce false-positive and false-negative results, so a low estimate does not rule out suicidal ideation "
-                "and a high estimate does not provide a diagnosis. This tool is intended for research and educational purposes and should "
-                "not replace professional assessment. If there are concerns about suicidal thoughts or personal safety, seek professional help "
+                "Prediction estimates may not fully reflect an individual's actual risk. "
+                "If you are concerned about suicidal thoughts or your safety, consider speaking with a qualified health professional "
                 "regardless of the estimated probability."
             )
 
