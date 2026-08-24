@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 st.set_page_config(
-    page_title="Suicidal Thinking Prediction",
+    page_title="Suicidal Ideation Prediction",
     page_icon="🧠",
     layout="centered"
 )
@@ -37,7 +37,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Suicidal Thinking Probability Prediction")
+st.title("Suicidal Ideation Probability Prediction")
 st.markdown(
     '<div class="app-subtitle">A research-based tool for estimating the probability of suicidal ideation.</div>',
     unsafe_allow_html=True
@@ -205,43 +205,22 @@ if st.button("Predict probability", type="primary", use_container_width=True):
                 """,
                 unsafe_allow_html=True
             )
-            st.caption(
-                "This value represents the probability estimated by the model based on the information entered."
+
+        with st.container(border=True):
+            st.markdown("#### What this means")
+            st.write(
+                "This percentage is a model-based estimate calculated from the information you entered. "
+                "A higher value indicates greater similarity to patterns associated with suicidal ideation in the data used to develop the model. "
+                "It does not confirm whether suicidal ideation is present."
             )
 
         with st.container(border=True):
-            st.markdown("#### How to interpret this result")
+            st.markdown("#### Important note")
             st.write(
-                "A higher estimated probability indicates that the entered characteristics are more similar to patterns "
-                "associated with suicidal ideation in the model-development data. However, this estimate should not be "
-                "interpreted as a diagnosis or as confirmation of suicidal ideation."
-            )
-
-            if prob >= 0.50:
-                st.write(
-                    "This estimate is above the model's default 0.50 classification threshold. "
-                    "This threshold is statistical rather than clinical and should not be used alone to determine individual risk."
-                )
-            else:
-                st.write(
-                    "This estimate is below the model's default 0.50 classification threshold. "
-                    "A value below this threshold does not rule out suicidal ideation or the need for further assessment."
-                )
-
-        with st.container(border=True):
-            st.markdown("#### Important limitations")
-            st.write(
-                "The model may produce both false-positive and false-negative predictions. "
-                "A higher estimated probability does not confirm suicidal ideation, and a lower estimated probability does not exclude it. "
-                "Predictions may also vary across populations and settings."
-            )
-
-        with st.container(border=True):
-            st.markdown("#### Additional guidance")
-            st.write(
-                "This application is intended for research and educational purposes and does not replace a clinical interview, "
-                "professional judgment, or a comprehensive suicide-risk assessment. If there are concerns about suicidal thoughts "
-                "or personal safety, professional assessment should be sought regardless of the predicted probability."
+                "The model can produce false-positive and false-negative results, so a low estimate does not rule out suicidal ideation "
+                "and a high estimate does not provide a diagnosis. This tool is intended for research and educational purposes and should "
+                "not replace professional assessment. If there are concerns about suicidal thoughts or personal safety, seek professional help "
+                "regardless of the estimated probability."
             )
 
         with st.expander("View information used for this prediction"):
